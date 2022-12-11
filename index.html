@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="main.css" />
+    <title>Input Form</title>
+</head>
+<body>
+    <!-- update route below accordingly -->
+<form id="input_form" action="http://127.0.0.1:5000/calculate_score" method="POST" onsubmit="return validateForm(event)"> 
+  <label for="input_field">Enter an Ethereum NFT Contract Address</label><br>
+  <input type="text" id="input_field" name="input_field"><br><br>
+  <input type="submit" value="Submit">
+</form> 
+
+<!-- div to display the result of the form submission -->
+<div id="result"></div>
+
+<!-- JavaScript function -->
+<script>
+    // define the validateForm() function
+    function validateForm(event) {
+
+      // prevent the form from being submitted as usual
+        event.preventDefault();
+  
+      // get the input value from the form submission
+        const inputValue = document.getElementById('input_field').value;
+        
+        // check if the input value is undefined (i.e. the user did not provide a value for the input field)
+        if (typeof inputValue === "undefined") {
+            alert("Input must not be blank!");
+            return false;
+        }
+        
+      // validate the input value here (e.g. check that it is not empty)
+        if (inputValue == "") {
+            alert("Input must not be blank!");
+            return false;
+        }
+
+       
+        //use the fetch() function to make an asynchronous HTTP request to the Flask app
+        //UPDATE ROUTE
+        fetch('http://127.0.0.1:5000/calculate_score', {
+            method: 'POST',
+            body: JSON.stringify({input_field: inputValue}),
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Access-Control-Allow-Origin': '*',
+                //'mode': 'no-cors'
+            }
+        })
+            // handle the response from the Flask app in the then() function
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // display the response from the Flask app in the HTML element with the "output" ID
+                document.getElementById('result').innerHTML = data;
+            });
+    }
+</script>
+<p id="note">
+    Notes: 
+</p>
+<ol id="noteol">
+    <li>Recently, the Moralis API has been experiencing downtime. This may be a cause for any 500 Errors experienced. Check API uptime <a href= "https://status.moralis.io/" target="_blank">here</a>.</li>
+    <li>This app currently runs in Python, so there is no parallel processing involved. In order to compute the score of a collection,
+        one API call must be made per wallet to retrieve native token balance. As a result, processing of large collections can take a long time.
+        Re-architecting this application using a language that supports multi-threading (such as Go) is currently of high priority. For more information during the score computation process
+        in these development stages, please refer to the console after clicking 'Submit'. For easy testing, here is the contract address to the 
+        <a href="https://opensea.io/collection/pixelvault-core" target="_blank">Pixel Vault Core NFT Collection</a>: 0xFb10b1717C92e9cc2d634080c3c337808408D9E1</li>
+</body>
+</ol>
+</html>

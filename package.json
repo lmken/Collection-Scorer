@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@moralisweb3/common-evm-utils": "^2.8.2",
+    "moralis": "^2.8.2"
+  }
+}

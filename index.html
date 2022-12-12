@@ -6,7 +6,7 @@
     <title>Input Form</title>
 </head>
 <body>
-    <!-- update route below accordingly -->
+    <!-- HTML form that will accept user input and call validateForm() to start the Flask app -->
 <form id="input_form" action="http://127.0.0.1:5000/calculate_score" method="POST" onsubmit="return validateForm(event)"> 
   <label for="input_field">Enter an Ethereum NFT Contract Address</label><br>
   <input type="text" id="input_field" name="input_field"><br><br>
@@ -16,32 +16,32 @@
 <!-- div to display the result of the form submission -->
 <div id="result"></div>
 
-<!-- JavaScript function -->
 <script>
-    // define the validateForm() function
+    // this function will do some very surface level error handling, 
+    // then pass to Flask app using fetch() API. 
+    // TODO: Add more error handling 
     function validateForm(event) {
 
-      // prevent the form from being submitted as usual
+        // prevent the form from being submitted as usual
         event.preventDefault();
   
-      // get the input value from the form submission
+        // get the input value from the form submission
         const inputValue = document.getElementById('input_field').value;
         
-        // check if the input value is undefined (i.e. the user did not provide a value for the input field)
+        // check if the input value is undefined
         if (typeof inputValue === "undefined") {
-            alert("Input must not be blank!");
+            alert("Input must not be undefined!");
             return false;
         }
         
-      // validate the input value here (e.g. check that it is not empty)
+      // check that input is not empty)
         if (inputValue == "") {
             alert("Input must not be blank!");
             return false;
         }
 
        
-        //use the fetch() function to make an asynchronous HTTP request to the Flask app
-        //UPDATE ROUTE
+        //Use the fetch() function to make an asynchronous request to the Flask app
         fetch('http://127.0.0.1:5000/calculate_score', {
             method: 'POST',
             body: JSON.stringify({input_field: inputValue}),
@@ -52,6 +52,7 @@
             }
         })
             // handle the response from the Flask app in the then() function
+            // parse response so output shows up properly
             .then(response => response.json())
             .then(data => {
                 console.log(data);
@@ -60,11 +61,12 @@
             });
     }
 </script>
+
 <p id="note">
     Notes: 
 </p>
 <ol id="noteol">
-    <li>Recently, the Moralis API has been experiencing downtime. This may be a cause for any 500 Errors experienced. Check API uptime <a href= "https://status.moralis.io/" target="_blank">here</a>.</li>
+    <li>Sometimes the Moralis API experiences downtime. This may be a cause for any 500 Errors experienced. Check API uptime <a href= "https://status.moralis.io/" target="_blank">here</a>.</li>
     <li>This app currently runs in Python, so there is no parallel processing involved. In order to compute the score of a collection,
         one API call must be made per wallet to retrieve native token balance. As a result, processing of large collections can take a long time.
         Re-architecting this application using a language that supports multi-threading (such as Go) is currently of high priority. For more information during the score computation process

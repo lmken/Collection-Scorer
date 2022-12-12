@@ -7,7 +7,8 @@ A multiplier is added for larger communities, as a larger community generally me
 this app can be used to discover Ethereum-based NFT collections with the most well-resourced NFT collectors. The application uses JavaScript on the client-side and Python 
 with Flask on the server-side to accomplish this task.
 
-NOTE: To use this app on your local machine, you will need a API key from https://moralis.io/nft-api/. Place this in a 'config.py' file, set to a variable called MORALIS_API_KEY.
+IMPORTANT NOTES: 
+To use this app on your local machine, you will need a API key from https://moralis.io/nft-api/. Place this in a 'config.py' file, set to a variable called MORALIS_API_KEY.
 Recently, the Moralis API has been experiencing downtime. This may be a cause for any 500 Errors experienced. Check API uptime on https://status.moralis.io/.
 This app currently runs in Python, so there is no parallel processing involved. In order to compute the score of a collection, one API call 
 must be made per wallet to retrieve native token balance. As a result, processing of large collections can take a long time. Re-architecting this 

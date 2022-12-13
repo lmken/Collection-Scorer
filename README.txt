@@ -15,7 +15,7 @@ Error codes for this are in the works.
 3.) This app currently runs in Python and there is no multi-threading involved. In order to compute the score of a collection, one API call 
 must be made per wallet to retrieve native token balance. As a result, processing of large collections can take a long time. Re-architecting this 
 application using a language that supports multi-threading (such as Go) is currently of high priority. It is also possible that this can be achieved whilst staying with
-Python, as this objective may be achievable with the "threading" class. For more information during the score computation process in these development stages, please 
+Python, as this objective may be achievable with the "threading" module. For more information during the score computation process in these development stages, please 
 refer to the console after clicking 'Submit'. 
 4.) For quick and easy testing, here is the contract address to the Pixel Vault Core NFT Collection: 0xFb10b1717C92e9cc2d634080c3c337808408D9E1.
 
